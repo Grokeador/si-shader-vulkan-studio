@@ -379,7 +379,7 @@ def install_dxvk_to_game(
     info = get_official_dxvk_info()
     tgz_path = cdir / info["filename"]
 
-    if force_download or not tgz_path.exists() or tgz_path.stat().st_size < 100_000:
+    if force_download or not tgz_path.exists() or not tarfile.is_tarfile(tgz_path):
         tmp_tgz = tgz_path.with_suffix(".tmp")
         req = urllib.request.Request(info["url"], headers={"User-Agent": "SI-Shader-Vulkan-Studio/1.0"})
         with urllib.request.urlopen(req, timeout=45) as resp, tmp_tgz.open("wb") as out:
